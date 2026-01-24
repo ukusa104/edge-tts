@@ -4,21 +4,23 @@
 __pycache__/
 *.o
 *.obj
-*.out
 dist/
 build/
-target/
+*.class
+*.exe
+*.dll
+*.so
+*.a
+*.out
 
 # Dependencies
 .venv/
 venv/
-.env
-.env.local
-.env.*
 node_modules/
-.julia/
-zig*/
-julia-*/
+.mypy_cache/
+.pytest_cache/
+target/
+.gradle/
 
 # Logs and temp files
 *.log
@@ -26,11 +28,14 @@ julia-*/
 *.swp
 *.swo
 
+# Environment
+.env
+.env.local
+*.env.*
+
 # Editors
 .vscode/
 .idea/
-*.swp
-*.swo
 
 # System files
 .DS_Store
@@ -40,13 +45,6 @@ Thumbs.db
 coverage/
 htmlcov/
 .coverage
-
-# Python specific
-.mypy_cache/
-.pytest_cache/
-
-# Gradle
-.gradle/
 
 # Compressed files
 *.zip
