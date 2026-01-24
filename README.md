@@ -1,76 +1,133 @@
-# edge-tts
+# GLM-TTS Web Application
 
-`edge-tts` is a Python module that allows you to use Microsoft Edge's online text-to-speech service from within your Python code or using the provided `edge-tts` or `edge-playback` command.
+A complete web application for the GLM-TTS text-to-speech system featuring a React frontend and Python backend.
 
-## Installation
+## Overview
 
-To install it, run the following command:
+This project provides a complete solution for deploying the GLM-TTS text-to-speech model with:
+- An intuitive React-based frontend interface
+- A Python Flask backend that interfaces with the GLM-TTS model
+- Real-time text-to-speech conversion
+- Voice customization options (speed, pitch, volume)
 
-    $ pip install edge-tts
+## Features
 
-If you only want to use the `edge-tts` and `edge-playback` commands, it would be better to use `pipx`:
+### Frontend
+- Modern React interface with Vite
+- Text input area with example templates
+- Voice parameter controls (speed, pitch, volume)
+- Audio playback functionality
+- Responsive design for all devices
+- Real-time feedback
 
-    $ pipx install edge-tts
+### Backend
+- Flask API server
+- RESTful endpoints for TTS conversion
+- CORS support for frontend communication
+- Audio file generation and delivery
+- Voice parameter processing
+
+## Project Structure
+
+```
+/workspace/
+├── GLM-TTS/                 # Original GLM-TTS repository
+├── tts-frontend/            # React frontend application
+│   ├── src/
+│   │   ├── App.jsx         # Main application component
+│   │   ├── App.css         # Application styles
+│   │   └── api.js          # API service functions
+│   └── ...
+├── tts_backend.py           # Python Flask backend server
+├── backend_requirements.txt # Backend Python dependencies
+├── start_app.sh             # Startup script
+├── DEPLOYMENT_GUIDE.md      # Complete deployment documentation
+└── README.md               # This file
+```
+
+## Quick Start
+
+### Prerequisites
+- Python 3.8+
+- Node.js 14+
+- Git
+
+### Installation
+
+1. **Install Python dependencies**:
+   ```bash
+   pip install -r backend_requirements.txt
+   ```
+
+2. **Set up the frontend**:
+   ```bash
+   cd tts-frontend
+   npm install
+   ```
+
+3. **Start the application**:
+   ```bash
+   ./start_app.sh
+   ```
+
+### Access the Application
+
+- **Frontend**: http://localhost:5173
+- **Backend API**: http://localhost:8000
 
 ## Usage
 
-### Basic usage
+1. Enter text in the input field
+2. Adjust voice parameters (speed, pitch, volume) as needed
+3. Click "Generate Speech" to convert text to audio
+4. Use the play button to listen to the generated audio
+5. Try example texts for quick demonstrations
 
-If you want to use the `edge-tts` command, you can simply run it with the following command:
+## Customization
 
-    $ edge-tts --text "Hello, world!" --write-media hello.mp3 --write-subtitles hello.srt
+### Frontend
+- Modify `tts-frontend/src/App.jsx` to change UI components
+- Update `tts-frontend/src/App.css` for styling changes
+- Edit `tts-frontend/src/api.js` for API integration updates
 
-If you wish to play it back immediately with subtitles, you could use the `edge-playback` command:
+### Backend
+- Update `tts_backend.py` to integrate with the actual GLM-TTS model
+- Add new API endpoints as needed
+- Modify voice processing logic
 
-    $ edge-playback --text "Hello, world!"
+## Deployment
 
-Note that `edge-playback` requires the installation of the [`mpv` command line player](https://mpv.io/), except on Windows.
+For production deployment, refer to the complete guide in [DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md).
 
-All `edge-tts` commands work with `edge-playback` with the exception of the `--write-media`, `--write-subtitles` and `--list-voices` options.
+## Technologies Used
 
-### Changing the voice
+- **Frontend**: React, Vite, JavaScript, CSS
+- **Backend**: Python, Flask, Transformers
+- **Model**: GLM-TTS (placeholder implementation included)
+- **Audio Processing**: NumPy, SciPy, LibROSA
 
-You can change the voice used by the text-to-speech service by using the `--voice` option. The `--list-voices` option can be used to list all available voices.
+## Next Steps for Full Implementation
 
-    $ edge-tts --list-voices
-    Name                               Gender    ContentCategories      VoicePersonalities
-    ---------------------------------  --------  ---------------------  --------------------------------------
-    af-ZA-AdriNeural                   Female    General                Friendly, Positive
-    af-ZA-WillemNeural                 Male      General                Friendly, Positive
-    am-ET-AmehaNeural                  Male      General                Friendly, Positive
-    am-ET-MekdesNeural                 Female    General                Friendly, Positive
-    ar-AE-FatimaNeural                 Female    General                Friendly, Positive
-    ar-AE-HamdanNeural                 Male      General                Friendly, Positive
-    ar-BH-AliNeural                    Male      General                Friendly, Positive
-    ar-BH-LailaNeural                  Female    General                Friendly, Positive
-    ar-DZ-AminaNeural                  Female    General                Friendly, Positive
-    ar-DZ-IsmaelNeural                 Male      General                Friendly, Positive
-    ar-EG-SalmaNeural                  Female    General                Friendly, Positive
-    ...
+1. Replace the placeholder model in `tts_backend.py` with the actual GLM-TTS model
+2. Implement proper text preprocessing for the GLM-TTS model
+3. Add voice selection capabilities
+4. Implement audio quality improvements
+5. Add user authentication if needed
+6. Set up proper logging and monitoring
 
-    $ edge-tts --voice ar-EG-SalmaNeural --text "مرحبا كيف حالك؟" --write-media hello_in_arabic.mp3 --write-subtitles hello_in_arabic.srt
+## Contributing
 
-### Custom SSML
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
 
-Support for custom SSML was removed because Microsoft prevents the use of any SSML that could not be generated by Microsoft Edge itself. This means that all the cases where custom SSML would be useful cannot be supported as the service only permits a single `<voice>` tag with a single `<prosody>` tag inside it. Any available customization options that could be used in the `<prosody>` tag are already available from the library or the command line itself.
+## License
 
-### Changing rate, volume and pitch
+See the original GLM-TTS repository for licensing information.
 
-You can change the rate, volume and pitch of the generated speech by using the `--rate`, `--volume` and `--pitch` options. When using a negative value, you will need to use `--[option]=-50%` instead of `--[option] -50%` to avoid the option being interpreted as a command line option.
+## Support
 
-    $ edge-tts --rate=-50% --text "Hello, world!" --write-media hello_with_rate_lowered.mp3 --write-subtitles hello_with_rate_lowered.srt
-    $ edge-tts --volume=-50% --text "Hello, world!" --write-media hello_with_volume_lowered.mp3 --write-subtitles hello_with_volume_lowered.srt
-    $ edge-tts --pitch=-50Hz --text "Hello, world!" --write-media hello_with_pitch_lowered.mp3 --write-subtitles hello_with_pitch_lowered.srt
-
-## Python module
-
-It is possible to use the `edge-tts` module directly from Python. Examples from the project itself include:
-
-* [/examples/](/examples/)
-* [/src/edge_tts/util.py](/src/edge_tts/util.py)
-
-Other projects that use the `edge-tts` module include:
-
-* [hass-edge-tts](https://github.com/hasscc/hass-edge-tts/blob/main/custom_components/edge_tts/tts.py)
-* [Podcastfy](https://github.com/souzatharsis/podcastfy/blob/main/podcastfy/tts/providers/edge.py)
-* [tts-samples](https://github.com/yaph/tts-samples/blob/main/bin/create_sound_samples.py) - a collection of [mp3 sound samples](https://github.com/yaph/tts-samples/tree/main/mp3) to facilitate picking a voice for your project.
+For issues with this specific implementation, please open an issue in this repository.
+For GLM-TTS model-specific questions, refer to the original repository.
