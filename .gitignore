@@ -4,6 +4,7 @@
 __pycache__/
 *.o
 *.obj
+*.out
 dist/
 build/
 target/
@@ -11,20 +12,19 @@ target/
 # Dependencies
 .venv/
 venv/
+.env
+.env.local
+.env.*
 node_modules/
 .julia/
-.zig-cache/
+zig*/
+julia-*/
 
 # Logs and temp files
 *.log
 *.tmp
 *.swp
 *.swo
-
-# Environment
-.env
-.env.local
-*.env.*
 
 # Editors
 .vscode/
@@ -40,6 +40,13 @@ Thumbs.db
 coverage/
 htmlcov/
 .coverage
+
+# Python specific
+.mypy_cache/
+.pytest_cache/
+
+# Gradle
+.gradle/
 
 # Compressed files
 *.zip
